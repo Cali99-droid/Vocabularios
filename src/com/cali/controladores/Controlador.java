@@ -1,11 +1,20 @@
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad Nacional Santiago Antunez de Mayolo
+ * Ingeniería de Sistemas e Infomatica
+ * Licenciado bajo el esquema Academic Free License version 2.1
+ *
+ * Curso: Teoria del Lenguaje
+ * Ejercicio: Vocabularios
+ * Autor: Orellano Rondan Carlos - Noviembre - 2020
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
 package com.cali.controladores;
 
 import com.cali.interfaz.FrameVocabulario;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -20,19 +29,47 @@ import java.util.List;
  * @author CARLOS ORELLANO
  */
 public class Controlador implements ActionListener, ListSelectionListener {
-
+    
+    /**
+     * Vista, interfaz del programa
+     */
     private FrameVocabulario frmVocabulario;
     
+    /**
+     * Objeto para validar
+     */
+    private ValidarEntrada validar ;
+    
+    //-----------------------------------------------------------------
+    // Constantes
+    //-----------------------------------------------------------------
+    /**
+     * Limite de Vocabularios
+     */
     private static int LIMITE_DE_VOCABULARIOS   = 6;
+    
+    /**
+     * Longitud Maxima
+     */
     private static int LONGITUD_MAXIMA = 7;
     
-    private  ArrayList<Vocabulario> vocabularios = new ArrayList<>();
-    private  ArrayList<ArrayList<String>> arrayDeCadenas = new ArrayList();  
+    //-----------------------------------------------------------------
+    // Atributos
+    //-----------------------------------------------------------------
     
-    private ValidarEntrada validar ;
-
+    /**
+     * Array de objetos tipo vocabulario
+     */
+    private  ArrayList<Vocabulario> vocabularios = new ArrayList<>();
+   // private  ArrayList<ArrayList<String>> arrayDeCadenas = new ArrayList();  
+    
+    
+   /**
+     * Crea el controlador y agrega oyentes a cada componente<br>
+     * <b>post: </b> El Controlador comunica Vocabulario con Interfaz
+     * @param frmVocabulario  - interfaz del programa
+     */
     public Controlador(FrameVocabulario frmVocabulario) {
-
         this.frmVocabulario = frmVocabulario;
         this.frmVocabulario.btnAgregar.addActionListener(this);
        // this.frmVocabulario.btnAgregarElemto.addActionListener(this);
@@ -44,6 +81,9 @@ public class Controlador implements ActionListener, ListSelectionListener {
 
     }
 
+     /**
+     * Inicializa el modelo y la vista
+     */
     public void iniciar() {
 
         frmVocabulario.setTitle("Vocabularios");
@@ -51,7 +91,12 @@ public class Controlador implements ActionListener, ListSelectionListener {
         frmVocabulario.setVisible(true);
 
     }
-
+    
+    
+    /**
+     * Implementa el metodo de las interfaces
+     * ActionListener
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == frmVocabulario.btnAgregar) {
@@ -82,7 +127,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
             }else{
                 int cantidadCadenas = Integer.parseInt(cantidad);
                 generarCadenas(cantidadCadenas);
-                llenarCadenas(); 
+                //llenarCadenas(); 
             }
            
             
@@ -95,6 +140,10 @@ public class Controlador implements ActionListener, ListSelectionListener {
 
     }
 
+    
+    /**
+     * Llena la JList del vocabulario
+     */
     public void llenarListVoc() {
         frmVocabulario.mVocabulario.removeAllElements();
         for (int i = 0; i < vocabularios.size(); i++) {
@@ -103,20 +152,24 @@ public class Controlador implements ActionListener, ListSelectionListener {
         }
     }
 
+    /**
+     * Agrega un nuevo vocabulario al 
+     * arraylist vocabularios
+     * @param longitud - longitud del nuevo vocabulario
+     * @param nombre - nombre del nuevo vocabulario
+     */
     public void agregarVocabulario(int longitud, String nombre) {
         if (LONGITUD_MAXIMA>longitud) {
             vocabularios.add(new Vocabulario(longitud, nombre));
             frmVocabulario.txtNombreVoc.setEnabled(false);
             frmVocabulario.txtLongitud.setEnabled(false);
             int i = 0;
-            while(i<=longitud){
+            while(i<longitud){
                 if (agregarElmento()){
                      i++;
                 }else{
                     i--;
-                }
-                
-               
+                } 
             }
             
         } else  {
@@ -124,11 +177,18 @@ public class Controlador implements ActionListener, ListSelectionListener {
         }
     }
 
+    /**
+     * Limpiar los JTextField
+     */
     public void limpiar() {
         frmVocabulario.txtLongitud.setText("");
         frmVocabulario.txtNombreVoc.setText("");
     }
-
+    
+   /**
+     * Agregar y valida un elemento a un vocabulario
+     * @return b boleana que confirma el elemento agregado
+     */
     public boolean agregarElmento() {
         Vocabulario auxVoc;
       //  int indice = frmVocabulario.listVocabulario.getSelectedIndex();
@@ -169,6 +229,11 @@ public class Controlador implements ActionListener, ListSelectionListener {
     return b;
     }
 
+    /**
+     * impelemta la interfaz de
+     * ListSelectionListener
+     * @param e - ListSelectionEvent evento de seleccionde item del JList
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         Vocabulario auxVoc;
@@ -189,69 +254,96 @@ public class Controlador implements ActionListener, ListSelectionListener {
 
     }
     
+    /**
+     * Genera las cadenas del vocabulario seleccionado en el JList
+     * @param cantidadCadena - cantidad de cadenas a crearse
+     */
     public void generarCadenas(int cantidadCadena){
-        arrayDeCadenas.clear();
+        
         int indice = frmVocabulario.listVocabulario.getSelectedIndex();
         if(indice == -1){
             JOptionPane.showMessageDialog(null, "Selecciona un vocabulario");
-        }else{
+         }else{
         Vocabulario voc = vocabularios.get(indice);
+       // int longi =  devolverAleatorio();
+        voc.crearCadena(cantidadCadena);
         
-        ArrayList<String> cad = voc.getElementos();
-        
-        List<String> ejemploLista = cad;
-        
-       
-        
-            
-        for (int i = 0; i < cantidadCadena; i++) {
-            ArrayList<String> cadenaGenerada = new ArrayList<>();
-            Collections.shuffle(ejemploLista);
-            int longi =  devolverAleatorio();
-            for (int e = 0; e < longi; e++) {
-               cadenaGenerada.add(ejemploLista.get(e));
-           }           
-           arrayDeCadenas.add(cadenaGenerada);            
+        llenarCadenas(voc);
         }
-  
-        }
+        
+        
+        
+        
+        
+//        arrayDeCadenas.clear();
+//        int indice = frmVocabulario.listVocabulario.getSelectedIndex();
+//        
+//        if(indice == -1){
+//            JOptionPane.showMessageDialog(null, "Selecciona un vocabulario");
+//        }else{
+//        Vocabulario voc = vocabularios.get(indice);
+//        
+//        ArrayList<String> cad = voc.getElementos();
+//        
+//        List<String> ejemploLista = cad;          
+//        for (int i = 0; i < cantidadCadena; i++) {
+//            ArrayList<String> cadenaGenerada = new ArrayList<>();
+//            Collections.shuffle(ejemploLista);
+//            int longi =  devolverAleatorio();
+//            for (int e = 0; e < longi; e++) {
+//               cadenaGenerada.add(ejemploLista.get(e));
+//           }           
+//           arrayDeCadenas.add(cadenaGenerada);            
+//        }
+//  
+//        }
 
     }
     
-    public void llenarCadenas(){
+    /**
+     * llena las cadenas generadas de longitudes diferentes
+     * @param voc - vocabulario del que se generaran las cadenas
+     */
+    public void llenarCadenas(Vocabulario voc){
         frmVocabulario.mCadena.removeAllElements();
-        for (int i = 0; i <  devolverCadena().size(); i++) {
-            frmVocabulario.mCadena.add(i, devolverCadena().get(i));
+        for (int i = 0; i <  voc.devolverCadenaConcatenada().size(); i++) {
+            frmVocabulario.mCadena.add(i, voc.devolverCadenaConcatenada().get(i));
+            System.out.println(voc.devolverCadenaConcatenada().get(i));
 
         }
     }
     
+    
+    /**
+     * No usado
+     * @return nada
+     */
     public int devolverAleatorio(){
-        int indice = frmVocabulario.listVocabulario.getSelectedIndex();
+        int indice      = frmVocabulario.listVocabulario.getSelectedIndex();
         Vocabulario voc = vocabularios.get(indice);
-        System.out.println("indice seleccionado: " + indice);
+       // System.out.println("indice seleccionado: " + indice);
         return (int)(Math.random()*voc.getElementos().size()+1);
     }
-   public ArrayList<String> devolverCadena(){
-       ArrayList<String> cadenas = new ArrayList<>();
-       
-       for (int i = 0; i < arrayDeCadenas.size(); i++) {
-            ArrayList<String> ara = arrayDeCadenas.get(i);
-            StringBuilder cadena = new StringBuilder();
-            for (int j = 0; j < ara.size(); j++) {
-                cadena.append( ara.get(j));    
-            }
-             cadenas.add(cadena.toString());
-             
-            }
-  
-       return  cadenas;
-   }
+    
+    
+//   public ArrayList<String> devolverCadena(){
+//       ArrayList<String> cadenas = new ArrayList<>();
+//       
+//       for (int i = 0; i < arrayDeCadenas.size(); i++) {
+//            ArrayList<String> ara = arrayDeCadenas.get(i);
+//            StringBuilder cadena = new StringBuilder();
+//            for (int j = 0; j < ara.size(); j++) {
+//                cadena.append( ara.get(j));    
+//            }
+//             cadenas.add(cadena.toString());            
+//            }
+//       return  cadenas;
+//   }
    
    public void reiniciar(){
        vocabularios.clear();
        llenarListVoc();
-       arrayDeCadenas.clear();
+       //arrayDeCadenas.clear();
        frmVocabulario.mCadena.removeAllElements();
        frmVocabulario.mElemento.removeAllElements();
        frmVocabulario.txtLongitud.setEnabled(true);

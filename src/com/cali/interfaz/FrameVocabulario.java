@@ -1,7 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Universidad Nacional Santiago Antunez de Mayolo
+ * Ingeniería de Sistemas e Infomatica
+ * Licenciado bajo el esquema Academic Free License version 2.1
+ *
+ * Curso: Teoria del Lenguaje
+ * Ejercicio: Vocabularios
+ * Autor: Orellano Rondan Carlos - Noviembre - 2020
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 package com.cali.interfaz;
 
