@@ -34,7 +34,6 @@ public class Vocabulario {
     private  ArrayList<ArrayList<String>> arrayDeCadenas = new ArrayList(); 
 
 
-    
     /**
      *  atributo longitud: determina la longitud del vocabulario
      */    
@@ -46,7 +45,7 @@ public class Vocabulario {
     private String nombre;
    
     /**
-     * Crea la silla con su número identificador <br>
+     * 
      * <b>post: </b> El objeto vocabulario se crea solamente con un longitud y un nombre
      * @param longitud  - pertenece al intervalo mayor a 0 y menor a 7
      * @param nombre - da nombre al vocabulario}
@@ -152,7 +151,7 @@ public class Vocabulario {
        
        // Vocabulario voc = vocabularios.get(indice);
         
-        ArrayList<String> cad     = getElementos(); 
+        ArrayList<String> cad     = elementos; 
         List<String> ejemploLista = cad;  
         
         for (int i = 0; i < cantidadCadena; i++) {
@@ -173,8 +172,7 @@ public class Vocabulario {
      * cada simbolo concatenado
      * @return  cadenas - arraylist con las cadenas generadas concatenadas
      */
-    public ArrayList<String> devolverCadenaConcatenada(){
-       
+    public ArrayList<String> devolverCadenaConcatenada(){   
        ArrayList<String> cadenas = new ArrayList<>();
        
        for (int i = 0; i < arrayDeCadenas.size(); i++) {

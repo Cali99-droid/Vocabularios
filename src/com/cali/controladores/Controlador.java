@@ -102,7 +102,6 @@ public class Controlador implements ActionListener, ListSelectionListener {
         if (e.getSource() == frmVocabulario.btnAgregar) {
 
             if (frmVocabulario.txtLongitud.getText().length() == 0 || frmVocabulario.txtNombreVoc.getText().length() == 0) {
-
                 JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
             } else {
                 if (!validar.validarLongitud(frmVocabulario.txtLongitud.getText())) {
@@ -121,12 +120,17 @@ public class Controlador implements ActionListener, ListSelectionListener {
 //        }
         if (e.getSource() == frmVocabulario.btnGenerarCadenas) {
         
-            String cantidad = JOptionPane.showInputDialog(null, "Ingrese la cantodad de cadenas");
+            String cantidad = JOptionPane.showInputDialog(null, "Ingrese la cantidad de cadenas");
             if (!validar.validarLongitud(cantidad)) {
                 JOptionPane.showMessageDialog(null, "Incorrecto, corrija formato de cantidad");
             }else{
                 int cantidadCadenas = Integer.parseInt(cantidad);
-                generarCadenas(cantidadCadenas);
+                if(cantidadCadenas <= 1){
+                    JOptionPane.showMessageDialog(null, "ingrese mas de dos cadenas ");
+                }else{
+                     generarCadenas(cantidadCadenas);
+                }
+               
                 //llenarCadenas(); 
             }
            
@@ -159,6 +163,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
      * @param nombre - nombre del nuevo vocabulario
      */
     public void agregarVocabulario(int longitud, String nombre) {
+        
         if (LONGITUD_MAXIMA>longitud) {
             vocabularios.add(new Vocabulario(longitud, nombre));
             frmVocabulario.txtNombreVoc.setEnabled(false);
@@ -194,7 +199,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
       //  int indice = frmVocabulario.listVocabulario.getSelectedIndex();
       int indice = 0;
       boolean b= true;
-        String valor;
+      String valor;
         int aviso;
         if (indice != -1) {
             auxVoc = vocabularios.get(indice);
@@ -230,7 +235,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
     }
 
     /**
-     * impelemta la interfaz de
+     * implementa la interfaz de
      * ListSelectionListener
      * @param e - ListSelectionEvent evento de seleccionde item del JList
      */
@@ -249,7 +254,6 @@ public class Controlador implements ActionListener, ListSelectionListener {
             for (int i = 0; i < auxVoc.getElementos().size(); i++) {
                 frmVocabulario.mElemento.add(i, auxVoc.getElementos().get(i));
             }
-
         }
 
     }
@@ -264,6 +268,7 @@ public class Controlador implements ActionListener, ListSelectionListener {
         if(indice == -1){
             JOptionPane.showMessageDialog(null, "Selecciona un vocabulario");
          }else{
+            
         Vocabulario voc = vocabularios.get(indice);
        // int longi =  devolverAleatorio();
         voc.crearCadena(cantidadCadena);
