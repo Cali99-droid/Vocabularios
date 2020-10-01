@@ -125,7 +125,9 @@ public class Controlador implements ActionListener, ListSelectionListener {
                 JOptionPane.showMessageDialog(null, "Incorrecto, corrija formato de cantidad");
             }else{
                 int cantidadCadenas = Integer.parseInt(cantidad);
+                //Agregue esto
                 if(cantidadCadenas <= 1){
+                    
                     JOptionPane.showMessageDialog(null, "ingrese mas de dos cadenas ");
                 }else{
                      generarCadenas(cantidadCadenas);
